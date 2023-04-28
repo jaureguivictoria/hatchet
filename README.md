@@ -53,6 +53,11 @@ cp .env.example .env
 ./vendor/bin/sail artisan migrate
 ```
 
+- (Optional) Run the office locations seeder
+```console
+./vendor/bin/sail artisan db:seed 
+```
+
 ## Frontend
 
 Go to [localhost:80](localhost:80) to see the frontend. There is a single page which contains a paginated table of all the offices information, as well as a various filters to search by name, number of offices, number of tables, square meters and price.
