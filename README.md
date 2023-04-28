@@ -65,7 +65,7 @@ Go to [localhost:80](localhost:80) to see the frontend. There is a single page w
 
 ## API Documentation
 
-The API Documentation is in Postman, and can be found here: [add]. 
+The API Documentation is in Postman, and can be found here: [https://documenter.getpostman.com/view/6448092/2s93eSXaCx](https://documenter.getpostman.com/view/6448092/2s93eSXaCx). It is also uploaded in the root folder [Hatchet API.postman_collection.json](https://github.com/jaureguivictoria/hatchet/blob/main/Hatchet%20API.postman_collection.json)
 
 
 ## Tests
