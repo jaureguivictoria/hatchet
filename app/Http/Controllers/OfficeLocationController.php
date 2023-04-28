@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UploadOfficeLocationsCSVRequest;
 use App\Http\Resources\OfficeLocationCollection;
 use App\Models\OfficeLocation;
+use App\Repositories\OfficeLocationRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
@@ -62,7 +63,15 @@ class OfficeLocationController extends Controller
     {
         $perPage = request()->query('per_page', 15);
 
-        return new OfficeLocationCollection(OfficeLocation::paginate($perPage));
+        $officeLocations = OfficeLocationRepository::make()
+            ->filterByRange('price', request()->input('searchPriceFrom'), request()->input('searchPriceTo'))
+            ->filterByRange('sqmt', request()->input('searchSqmtFrom'), request()->input('searchSqmtTo'))
+            ->filterByOffices(request()->input('searchOffices'))
+            ->filterByTables(request()->input('searchTables'))
+            ->filterByName(request()->input('searchName'))
+            ->paginate($perPage);
+
+        return new OfficeLocationCollection($officeLocations);
     }
 
 }
