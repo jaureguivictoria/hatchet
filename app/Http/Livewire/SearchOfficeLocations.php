@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Http\Resources\OfficeLocationCollection;
 use App\Models\OfficeLocation;
+use App\Repositories\OfficeLocationRepository;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -32,15 +33,14 @@ class SearchOfficeLocations extends Component
 
     public function render()
     {
-        $officeLocations = new OfficeLocationCollection(
-            OfficeLocation::where('name', 'like', '%'.$this->searchName.'%')
-                ->orWhere('offices', $this->searchOffices)
-                ->orWhere('tables', $this->searchTables)
-                ->orWhereBetween('sqmt', [$this->searchSqmtFrom, $this->searchSqmtTo])
-                ->orWhereBetween('price', [$this->searchPriceFrom, $this->searchPriceTo])
-                ->paginate()
-        );
+        $officeLocations = OfficeLocationRepository::make()
+            ->filterByRange('price', $this->searchPriceFrom, $this->searchPriceTo)
+            ->filterByRange('sqmt', $this->searchSqmtFrom, $this->searchSqmtTo)
+            ->filterByOffices($this->searchOffices)
+            ->filterByTables($this->searchTables)
+            ->filterByName($this->searchName)
+            ->paginate();
 
-        return view('livewire.search-office-locations')->with('officeLocations', $officeLocations);
+        return view('livewire.search-office-locations')->with('officeLocations', new OfficeLocationCollection($officeLocations));
     }
 }
