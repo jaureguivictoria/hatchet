@@ -21,3 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('office_locations/upload',[OfficeLocationController::class, 'upload']);
+
+Route::get('office_locations',[OfficeLocationController::class, 'index']);
+

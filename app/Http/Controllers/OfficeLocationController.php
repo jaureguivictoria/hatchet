@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UploadOfficeLocationsCSVRequest;
+use App\Http\Resources\OfficeLocationCollection;
 use App\Models\OfficeLocation;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -55,6 +56,13 @@ class OfficeLocationController extends Controller
         DB::commit();
 
         return response()->json(['message' => 'Upload successfull']);
+    }
+
+    public function index()
+    {
+        $perPage = request()->query('per_page', 15);
+
+        return new OfficeLocationCollection(OfficeLocation::paginate($perPage));
     }
 
 }
